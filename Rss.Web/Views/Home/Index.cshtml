@@ -1,0 +1,26 @@
+﻿@model Rss.Web.Models.PageListViewModel<Rss.Dal.Entities.NewsItem>
+
+@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container col-xs-12">
+    <h1>Новостная лента</h1>
+    
+    <div class="row">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="col-xs-2">Название</thclass="col-xs-2">
+                    <th>Описание</th>
+                    <th>Дата Публикации</th>
+                </tr>
+            </thead>            
+                <div id="List">
+                    @Html.Partial("ListViewPatial", Model)
+                </div>
+        </table>
+
+        
+    </div>
+</div>

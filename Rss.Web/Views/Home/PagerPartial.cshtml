@@ -1,0 +1,54 @@
+﻿@model Rss.Web.Models.PageListViewModel<Rss.Dal.Entities.NewsItem>
+
+@using System.Text
+@{
+
+
+    var result = new StringBuilder();
+
+    
+    var liPrevNext = new TagBuilder("li");
+
+    
+    liPrevNext.InnerHtml = Ajax.ActionLink("<< туда", "Index",
+        new { page = Model.CurrentPage - 1 },
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "List" }).ToString();
+
+    if (Model.CurrentPage == 1)
+    {
+        liPrevNext.AddCssClass("hidden");
+    }
+
+    result.Append(liPrevNext.ToString());
+
+    for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        var li = new TagBuilder("li");
+
+        if (i == Model.CurrentPage)
+        {
+            li.AddCssClass("active");
+        }
+        
+        li.InnerHtml = Ajax.RouteLink(i.ToString(),
+            new { page = i },
+            new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "List" }).ToString();
+        result.Append(li.ToString());
+    }
+
+   
+    liPrevNext = new TagBuilder("li");
+    liPrevNext.InnerHtml = Ajax.ActionLink("сюда >>", "Index",
+        new { page = Model.CurrentPage + 1 },
+        new AjaxOptions { InsertionMode = InsertionMode.Replace, UpdateTargetId = "List" }).ToString();
+
+    if (Model.CurrentPage == Model.TotalPages)
+    {
+        liPrevNext.AddCssClass("hidden");
+    }
+
+    result.Append(liPrevNext.ToString());
+}
+<ul class="pagination">
+    @MvcHtmlString.Create(result.ToString())
+</ul>

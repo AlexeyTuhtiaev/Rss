@@ -1,0 +1,29 @@
+﻿@model Rss.Web.Models.PageListViewModel<Rss.Dal.Entities.NewsItem>
+
+@using System.Text;
+
+@{
+    StringBuilder result = new StringBuilder();
+    var i = 0;
+    int count = Model.Count();
+    TagBuilder row = new TagBuilder("tbody");
+
+    foreach (var itemNewsRow in Model)
+    {
+        i++;
+        count--;
+        
+        row.InnerHtml += Html.Partial("TableRowPartial", itemNewsRow);
+
+        if (i == 10 || count == 0)
+        {
+            result.Append(row.ToString());
+            i = 0;
+        }
+    }
+}
+
+@MvcHtmlString.Create(result.ToString())
+<div class="container">
+    @Html.Partial("PagerPartial", Model)
+</div>

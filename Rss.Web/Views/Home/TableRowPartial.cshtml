@@ -1,0 +1,7 @@
+﻿@model Rss.Dal.Entities.NewsItem
+
+<tr>
+    <td class="col-xs-2">@Model.Title</td>
+    <td>@Model.Description.Substring(0,200)</td>
+    <td>@Model.PublicationDate</td>
+</tr>
